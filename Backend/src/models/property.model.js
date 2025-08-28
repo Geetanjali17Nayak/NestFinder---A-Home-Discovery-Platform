@@ -9,6 +9,7 @@ const propertySchema = new mongoose.Schema(
     price: { type: Number, required: true },
     type: { type: String, enum: ["rental", "sale"], required: true },
     owner: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+    images: [{ type: String }], 
   },
   { timestamps: true }
 );

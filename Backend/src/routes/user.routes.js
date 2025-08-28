@@ -1,5 +1,5 @@
 import express from "express"
-import { registerUser,loginUser,getUserProfile, updateUserProfile,deleteUserProfile } from "../controllers/user.controller.js";
+import { registerUser,loginUser,getUserProfile, updateUserProfile,deleteUserProfile,getUserById } from "../controllers/user.controller.js";
 import { auth } from "../middlewares/auth.middleware.js";
 
 
@@ -10,6 +10,7 @@ userRouter.post("/login",loginUser)
 userRouter.get("/getUserProfile",auth,getUserProfile);
 userRouter.patch("/updateUserProfile",updateUserProfile);
 userRouter.delete("/deleteUserProfile",auth,deleteUserProfile);
+userRouter.get("/getUserById/:id", getUserById)
 
 
 export default userRouter;

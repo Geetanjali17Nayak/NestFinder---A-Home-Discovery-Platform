@@ -98,3 +98,20 @@ export const searchProperties = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
+
+//get owner properties
+
+export const getOwnerProperties = async (req, res) => {
+  try {
+    const properties = await Property.find({ owner: req.user._id });
+    if(!properties || properties.length === 0)
+    {
+      return res.status(404).json({ message: "No properties found" });
+    }
+    res.status(200).json(properties);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+  
+
+}
