@@ -1,0 +1,14 @@
+type Mutation {
+  addBooking(ownerId: ID!, bookingInput: BookingInput!): Booking
+}
+
+type Subscription {
+  bookingAdded(ownerId: ID!): Booking
+}
+
+input BookingInput {
+  property: ID!
+  user: ID!
+  message: String
+  status: String
+}

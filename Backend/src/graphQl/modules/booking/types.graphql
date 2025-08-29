@@ -1,0 +1,39 @@
+type Booking {
+  _id: ID!
+  property: Property!
+  user: User!
+  message: String
+  status: String!
+  createdAt: String!
+}
+
+type Property {
+  _id: ID!
+  title: String!
+  location: String!
+  price: Float!
+  type: String!
+  images: [String]
+  description: String
+  owner: User!
+}
+
+type User {
+  _id: ID!
+  name: String!
+  email: String!
+  avatar: String
+}
+
+
+type Query {
+  _: Boolean
+}
+
+type Mutation {
+  addBooking(property: ID!, user: ID!, message: String): Booking
+}
+
+type Subscription {
+  bookingAdded(ownerId: ID!): Booking
+}

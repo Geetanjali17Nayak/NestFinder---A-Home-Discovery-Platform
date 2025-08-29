@@ -1,12 +1,10 @@
-import express from "express"
-import cors from "cors"
-import userRouter from "./routes/user.routes.js" 
+import express from "express";
+import cors from "cors";
+import userRouter from "./routes/user.routes.js";
 import propertyRouter from "./routes/property.routes.js";
 import bookingRouter from "./routes/booking.routes.js";
 
-
-
-export const app= express();
+export const app = express();
 
 app.use(express.json());
 app.use(cors({
@@ -14,5 +12,5 @@ app.use(cors({
   credentials: true,
 }));
 app.use("/api/users", userRouter);
-app.use("/api/properties", propertyRouter); 
+app.use("/api/properties", propertyRouter);
 app.use("/api/bookings", bookingRouter);
