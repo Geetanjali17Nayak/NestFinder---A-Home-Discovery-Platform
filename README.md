@@ -1,1 +1,112 @@
-# NestFinder--A-Home-Discovery-Platform
+# NestFinder: A Home Discovery Platform
+
+NestFinder is a full-stack web application designed to help users discover, search, and book rental properties. It features a modern, real-time interface for both property owners and potential tenants, built with Next.js on the frontend and a Node.js/Express with GraphQL backend.
+
+## ✨ Features
+
+- **User Authentication**: Secure user registration and login system using JSON Web Tokens (JWT).
+- **Property Listings**: Browse, search, and filter properties by location, type, and price.
+- **Property Adding**: Seller can add, update and also delete their properties
+- **Real-time Notifications**: Property owners receive instant notifications for new booking requests via GraphQL Subscriptions.
+- **Admin Dashboard**: Admins get notified in real-time about new user registrations.
+- **Integrated Contact System**: A functional contact page that sends inquiries directly to a specified email address using Nodemailer.
+- **User Profiles**: Users can view and manage their profile information.
+- **Responsive Design**: A clean and modern UI built with Tailwind CSS that works on all devices.
+
+## 🛠️ Tech Stack
+
+### Frontend
+
+- **Framework**: [Next.js](https://nextjs.org/)
+- **Language**: JavaScript/TypeScript
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+- **State Management**: [React Context API](https://react.dev/learn/passing-data-deeply-with-context)
+- **GraphQL Client**: [Apollo Client](https://www.apollographql.com/docs/react/) for queries, mutations, and subscriptions.
+- **Icons**: [Lucide React](https://lucide.dev/)
+
+### Backend
+
+- **Framework**: [Node.js](https://nodejs.org/) with [Express](https://expressjs.com/)
+- **Database**: [MongoDB](https://www.mongodb.com/) with [Mongoose](https://mongoosejs.com/) ODM
+- **API**: [GraphQL](https://graphql.org/) with [Apollo Server](https://www.apollographql.com/docs/apollo-server/)
+- **Real-time**: [GraphQL Subscriptions](https://www.apollographql.com/docs/apollo-server/data/subscriptions/) over WebSockets
+- **Authentication**: [JSON Web Tokens (JWT)](https://jwt.io/) & [bcrypt](https://www.npmjs.com/package/bcrypt) for password hashing
+- **Email**: [Nodemailer](https://nodemailer.com/) for the contact form integration.
+
+## 🚀 Getting Started
+
+Follow these instructions to get a copy of the project up and running on your local machine for development and testing purposes.
+
+### Prerequisites
+
+- [Node.js](https://nodejs.org/en/) (v18 or later recommended)
+- [npm](https://www.npmjs.com/), [yarn](https://yarnpkg.com/), or [pnpm](https://pnpm.io/)
+- [MongoDB](https://www.mongodb.com/try/download/community) instance (local or cloud)
+
+### Backend Setup
+
+1.  **Navigate to the backend directory:**
+
+    ```bash
+    cd Backend
+    ```
+
+2.  **Install dependencies:**
+
+    ```bash
+    npm install
+    ```
+
+3.  **Create an environment file:**
+    Create a `.env` file in the `Backend` directory and add the following variables:
+
+        ```env
+        MONGO_URI=your_mongodb_connection_string
+        JWT_SECRET=your_super_secret_jwt_key
+        PORT=8000
+         EMAIL_USER=dummy@example.com
+        EMAIL_PASS=16 digit APP PASS
+    ```
+
+4.  **Start the backend server:**
+    ```bash
+    npm start
+    ```
+    The backend server will be running on `http://localhost:8000`.
+
+### Frontend Setup
+
+1.  **Navigate to the frontend directory:**
+
+    ```bash
+    cd frontend
+    ```
+
+2.  **Install dependencies:**
+
+    ```bash
+    npm install
+    ```
+
+3.  **Create a local environment file:**
+    Create a `.env.local` file in the `frontend` directory for the contact form's email credentials.
+
+    ```env
+    # Nodemailer Contact Form Configuration
+    EMAIL_SERVER_HOST=smtp.example.com
+    EMAIL_SERVER_PORT=587
+    EMAIL_SERVER_SECURE=false
+    EMAIL_SERVER_USER=your-email@example.com
+    EMAIL_SERVER_PASSWORD=your-email-password
+    EMAIL_TO=recipient@example.com
+    ```
+
+4.  **Start the frontend development server:**
+    ```bash
+    npm run dev
+    ```
+    The frontend will be available at `http://localhost:3000`.
+
+---
+
+Happy coding!
