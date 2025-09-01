@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 
 export default function ContactPage({ params }) {
-  const { ownerId } = React.use(params); // Unwrap params using React.use()
+  const { ownerId } = React.use(params); 
   const [owner, setOwner] = useState(null);
   const [userEmail, setUserEmail] = useState("");
   const [message, setMessage] = useState("");
@@ -104,27 +104,27 @@ export default function ContactPage({ params }) {
           </div>
         )}
 
-       
-         {/* Send Message Form */}
-        <div className="mt-6">
+        {/* Send Message Form */}
+        <div className="mt-6 space-y-5">
           <input
             type="email"
             placeholder="Your Email"
             value={userEmail}
             onChange={(e) => setUserEmail(e.target.value)}
-            className="border rounded-lg p-2 w-full mb-3"
+            className="w-full border border-blue-300 rounded-xl px-4 py-3 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm"
           />
+
           <textarea
             placeholder="Write your message..."
             value={message}
             onChange={(e) => setMessage(e.target.value)}
-            className="border rounded-lg p-2 w-full mb-3"
+            className="w-full border border-blue-300 rounded-xl px-4 py-3 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm"
             rows={4}
           />
           <button
             onClick={handleSend}
             disabled={loading}
-            className="w-full px-6 py-2 bg-blue-600 text-white rounded-lg font-semibold shadow hover:bg-blue-700 transition disabled:opacity-50"
+            className="w-full px-6 py-2 bg-blue-600 text-white rounded-lg font-semibold shadow hover:bg-blue-700 transition disabled:opacity-50 mt-2"
           >
             {loading ? "Sending..." : "Send Message"}
           </button>
@@ -133,4 +133,3 @@ export default function ContactPage({ params }) {
     </div>
   );
 }
-

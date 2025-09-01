@@ -41,6 +41,7 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import ApolloWrapper from "./lib/ApolloProvider"; // ✅ yaha import karo
 import { AuthProvider } from "./context/AuthContext";
+import { NotificationProvider } from "./context/NotificationContext";
 
 export default function RootLayout({ children }) {
   return (
@@ -49,9 +50,11 @@ export default function RootLayout({ children }) {
         <AuthProvider>
           <ApolloWrapper>
             {/* ✅ ApolloProvider wrapper */}
+            <NotificationProvider>
+              <Navbar />
+              {children}
+            </NotificationProvider>
 
-            <Navbar />
-            {children}
             <Footer />
           </ApolloWrapper>
         </AuthProvider>

@@ -11,5 +11,8 @@ export const resolvers = {
       subscribe: (_, { ownerId }) =>
         pubsub.asyncIterableIterator(`BOOKING_ADDED_${ownerId}`),
     },
+    userRegistered: {
+      subscribe: () => pubsub.asyncIterableIterator(["USER_REGISTERED"]),
+    },
   },
 };

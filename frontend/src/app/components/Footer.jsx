@@ -30,16 +30,10 @@ export default function Footer() {
             About
           </a>
           <a
-            href="/contact"
+            href="/helpDesk"
             className="hover:text-green-400 font-medium transition"
           >
             Contact
-          </a>
-          <a
-            href="/properties"
-            className="hover:text-green-400 font-medium transition"
-          >
-            Properties
           </a>
         </div>
         <p className="text-sm text-gray-300">

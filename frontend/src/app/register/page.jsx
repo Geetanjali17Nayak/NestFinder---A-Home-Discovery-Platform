@@ -1,16 +1,50 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import api from "../lib/api";
+import { useNotifications } from "../context/NotificationContext";
+import { useSubscription } from "@apollo/client/react";
+import gql from "graphql-tag";
+import { useRouter } from "next/navigation";
+
+export const ON_USER_REGISTERED = gql`
+  subscription OnUserRegistered {
+    userRegistered {
+      id
+      name
+      email
+      role
+    }
+  }
+`;
 
 export default function RegisterPage() {
+  const router = useRouter();
+  const { setNotifications } = useNotifications();
   const [form, setForm] = useState({
     name: "",
     email: "",
     password: "",
-    role: "buyer", // default role
+    role: "buyer",
   });
   const [message, setMessage] = useState(null);
   const [error, setError] = useState(null);
+
+  const { data: subscriptionData } = useSubscription(ON_USER_REGISTERED);
+
+  // Handle subscription updates
+  useEffect(() => {
+    if (subscriptionData?.userRegistered) {
+      const newUser = subscriptionData.userRegistered;
+      setNotifications((prev) => [
+        {
+          type: "user",
+          message: `${newUser.name} registered as ${newUser.role}`,
+          user: newUser,
+        },
+        ...prev,
+      ]);
+    }
+  }, [subscriptionData, setNotifications]);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -22,9 +56,25 @@ export default function RegisterPage() {
     setError(null);
 
     try {
-      await api.post("/api/users/register", form);
+      const res = await api.post("/api/users/register", form);
+      const newUser = res.data.user || res.data;
+
       setMessage("✅ User Registered Successfully!");
       setForm({ name: "", email: "", password: "", role: "buyer" });
+
+      setNotifications((prev) => [
+        {
+          type: "user",
+          message: `${newUser.name} registered as ${newUser.role}`,
+          user: newUser,
+        },
+        ...prev,
+      ]);
+
+      // Redirect to login after short delay
+      setTimeout(() => {
+        router.push("/login");
+      }, 1200);
     } catch (err) {
       setError(err.response?.data?.message || "❌ Something went wrong");
     }
@@ -60,7 +110,7 @@ export default function RegisterPage() {
           <p className="text-gray-500">Sign up for NestFinder</p>
         </div>
 
-        {/* Form Inputs */}
+        {/* Inputs */}
         <input
           type="text"
           name="name"
@@ -99,7 +149,7 @@ export default function RegisterPage() {
           <option value="agent">Agent</option>
         </select>
 
-        {/* Button */}
+        {/* Submit */}
         <button
           type="submit"
           className="w-full bg-blue-600 text-white py-3 rounded-xl font-bold text-lg hover:bg-blue-700 transition-all shadow-md hover:shadow-lg"
