@@ -1,17 +1,18 @@
-// src/app/contact/[ownerId]/page.js
 "use client";
-
-import { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 
 export default function ContactPage({ params }) {
-  const { ownerId } = params; // ✅ no need to await
+  const { ownerId } = React.use(params); // Unwrap params using React.use()
   const [owner, setOwner] = useState(null);
+  const [userEmail, setUserEmail] = useState("");
+  const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchOwner = async () => {
       try {
         const res = await fetch(
-          `http://localhost:5000/api/users/getUserById/${ownerId}`
+          `http://localhost:8000/api/users/getUserById/${ownerId}`
         );
         const data = await res.json();
         setOwner(data);
@@ -21,6 +22,36 @@ export default function ContactPage({ params }) {
     };
     fetchOwner();
   }, [ownerId]);
+
+  const handleSend = async () => {
+    if (!message || !userEmail) {
+      alert("Please enter your email and message!");
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const res = await fetch("http://localhost:8000/api/messages/sendEmail", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ownerEmail: owner.email,
+          userEmail,
+          message,
+        }),
+      });
+
+      const data = await res.json();
+      alert(data.msg || "Message sent!");
+      setMessage("");
+      setUserEmail("");
+    } catch (err) {
+      console.error(err);
+      alert("Failed to send message!");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   if (!owner)
     return (
@@ -73,13 +104,33 @@ export default function ContactPage({ params }) {
           </div>
         )}
 
-        {/* CTA */}
-        <div className="mt-6 text-center">
-          <button className="px-6 py-2 bg-blue-600 text-white rounded-lg font-semibold shadow hover:bg-blue-700 transition">
-            Send Message
+       
+         {/* Send Message Form */}
+        <div className="mt-6">
+          <input
+            type="email"
+            placeholder="Your Email"
+            value={userEmail}
+            onChange={(e) => setUserEmail(e.target.value)}
+            className="border rounded-lg p-2 w-full mb-3"
+          />
+          <textarea
+            placeholder="Write your message..."
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            className="border rounded-lg p-2 w-full mb-3"
+            rows={4}
+          />
+          <button
+            onClick={handleSend}
+            disabled={loading}
+            className="w-full px-6 py-2 bg-blue-600 text-white rounded-lg font-semibold shadow hover:bg-blue-700 transition disabled:opacity-50"
+          >
+            {loading ? "Sending..." : "Send Message"}
           </button>
         </div>
       </div>
     </div>
   );
 }
+

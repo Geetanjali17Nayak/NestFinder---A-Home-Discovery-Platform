@@ -3,6 +3,7 @@ import cors from "cors";
 import userRouter from "./routes/user.routes.js";
 import propertyRouter from "./routes/property.routes.js";
 import bookingRouter from "./routes/booking.routes.js";
+import messageRouter from "./routes/email.routes.js";
 
 export const app = express();
 
@@ -14,3 +15,4 @@ app.use(cors({
 app.use("/api/users", userRouter);
 app.use("/api/properties", propertyRouter);
 app.use("/api/bookings", bookingRouter);
+app.use("/api/messages", messageRouter);

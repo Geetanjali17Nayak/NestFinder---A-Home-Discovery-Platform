@@ -1,32 +1,36 @@
-"use client";
-
 import { ApolloClient, InMemoryCache, split, HttpLink } from "@apollo/client";
 import { GraphQLWsLink } from "@apollo/client/link/subscriptions";
-import { createClient } from "graphql-ws";
 import { getMainDefinition } from "@apollo/client/utilities";
+import { createClient } from "graphql-ws";
 
+// HTTP connection
 const httpLink = new HttpLink({
-  uri: "http://localhost:5000/graphql", // apna backend GraphQL endpoint
+  uri: "http://localhost:8000/graphql", // apna backend GraphQL endpoint
   credentials: "include",
 });
 
+// WebSocket connection for subscriptions
 const wsLink =
   typeof window !== "undefined"
     ? new GraphQLWsLink(
         createClient({
-          url: "ws://localhost:5000/graphql", // websocket endpoint
+          url: "ws://localhost:8000/graphql", // backend subscription endpoint
+          connectionParams:{
+            credentials: "include"
+          }
         })
       )
     : null;
 
+// Split HTTP / WS
 const splitLink =
-  typeof window !== "undefined"
+  typeof window !== "undefined" && wsLink != null
     ? split(
         ({ query }) => {
-          const def = getMainDefinition(query);
+          const definition = getMainDefinition(query);
           return (
-            def.kind === "OperationDefinition" &&
-            def.operation === "subscription"
+            definition.kind === "OperationDefinition" &&
+            definition.operation === "subscription"
           );
         },
         wsLink,

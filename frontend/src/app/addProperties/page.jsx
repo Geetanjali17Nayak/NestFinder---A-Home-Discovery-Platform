@@ -110,7 +110,8 @@ export default function AddPropertyPage() {
             placeholder="Location"
             value={form.location}
             onChange={handleChange}
-           className="w-full px-4 py-3 border-2 border-blue-200 rounded-lg focus:outline-none focus:border-blue-500 transition text-gray-900 placeholder-gray-400"            required
+            className="w-full px-4 py-3 border-2 border-blue-200 rounded-lg focus:outline-none focus:border-blue-500 transition text-gray-900 placeholder-gray-400"
+            required
           />
         </div>
 
@@ -128,7 +129,8 @@ export default function AddPropertyPage() {
             placeholder="Price"
             value={form.price}
             onChange={handleChange}
-            className="w-full px-4 py-3 border-2 border-blue-200 rounded-lg focus:outline-none focus:border-blue-500 transition text-gray-900 placeholder-gray-400"required
+            className="w-full px-4 py-3 border-2 border-blue-200 rounded-lg focus:outline-none focus:border-blue-500 transition text-gray-900 placeholder-gray-400"
+            required
           />
         </div>
 
@@ -144,7 +146,8 @@ export default function AddPropertyPage() {
             id="type"
             value={form.type}
             onChange={handleChange}
-            className="w-full px-4 py-3 border-2 border-blue-200 rounded-lg focus:outline-none focus:border-blue-500 transition text-gray-900 placeholder-gray-400" >
+            className="w-full px-4 py-3 border-2 border-blue-200 rounded-lg focus:outline-none focus:border-blue-500 transition text-gray-900 placeholder-gray-400"
+          >
             <option value="rental">Rental</option>
             <option value="sale">Sale</option>
           </select>

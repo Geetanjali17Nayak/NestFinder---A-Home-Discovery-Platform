@@ -43,7 +43,18 @@ const wsServer = new WebSocketServer({
   path: "/graphql",
 });
 
-useServer({ schema }, wsServer);
+// useServer({ schema }, wsServer);
+
+useServer(
+  {
+    schema,
+    context: async (ctx, msg, args) => {
+      // headers se user uthana ho to yaha likho
+      return { token: ctx.connectionParams?.authToken };
+    },
+  },
+  wsServer
+);
 
 const apolloServer = new ApolloServer({
   schema,
@@ -63,7 +74,7 @@ app.use(
   })
 );
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 8000;
 httpServer.listen(PORT, () => {
   console.log(`🚀 REST at http://localhost:${PORT}/api`);
   console.log(`🚀 GraphQL at http://localhost:${PORT}/graphql`);

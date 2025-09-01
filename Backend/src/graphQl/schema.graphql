@@ -1,5 +1,9 @@
+# type Mutation {
+#   addBooking(ownerId: ID!, bookingInput: BookingInput!): Booking
+# }
+
 type Mutation {
-  addBooking(ownerId: ID!, bookingInput: BookingInput!): Booking
+  addBooking(property: ID!, user: ID!, message: String): Booking
 }
 
 type Subscription {

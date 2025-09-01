@@ -9,20 +9,53 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // const checkUser = async () => {
+    //   const token = localStorage.getItem("token");
+    //   if (token) {
+    //     api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+    //     try {
+    //       const userId = localStorage.getItem("user")
+    //         ? JSON.parse(localStorage.getItem("user"))._id
+    //         : null;
+    //       if (userId) {
+    //         const { data } = await api.get(`/api/users/getUserById/${userId}`);
+    //         setUser(data);
+    //       }
+    //     } catch (err) {
+    //       console.error("Could not fetch user", err);
+    //       localStorage.removeItem("token");
+    //     }
+    //   }
+    //   setLoading(false);
+    // };
+
     const checkUser = async () => {
-      const token = localStorage.getItem("token");
-      if (token) {
-        api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-        try {
-          const { data } = await api.get("/api/users/getUserProfile");
-          setUser(data);
-        } catch (err) {
-          console.error("Could not fetch user", err);
-          localStorage.removeItem("token");
-        }
+  const token = localStorage.getItem("token");
+  if (token) {
+    api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+    try {
+      const storedUser = localStorage.getItem("user");
+      const parsedUser = storedUser ? JSON.parse(storedUser) : null;
+      const userId = parsedUser?._id || parsedUser?.id || null;
+
+      if (userId) {
+        const { data } = await api.get(`/api/users/getUserById/${userId}`);
+        setUser(data);
+      } else {
+        console.warn("User ID not found in localStorage.");
+        setUser(null);
       }
-      setLoading(false);
-    };
+    } catch (err) {
+      console.error("Could not fetch user", err);
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      setUser(null);
+    }
+  } else {
+    setUser(null);
+  }
+  setLoading(false);
+};
     checkUser();
   }, []);
 
@@ -40,7 +73,7 @@ export function AuthProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, loading }}>
+    <AuthContext.Provider value={{ user,setUser, login, logout, loading }}>
       {!loading && children}
     </AuthContext.Provider>
   );

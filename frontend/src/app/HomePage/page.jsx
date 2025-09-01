@@ -110,7 +110,6 @@ import api from "../lib/api";
 import { useAuth } from "../context/AuthContext";
 import Navbar from "../components/Navbar";
 
-
 export default function HomePage() {
   const [query, setQuery] = useState("");
   const [type, setType] = useState("");
@@ -154,6 +153,9 @@ export default function HomePage() {
       });
 
       setProperties(response.data);
+      if (!properties && properties.length === 0) {
+        setError("No properties found.");
+      }
     } catch (err) {
       setError("Failed to fetch properties.");
     } finally {
@@ -258,7 +260,12 @@ export default function HomePage() {
       <main className="p-8 max-w-7xl mx-auto">
         {loading && <p className="text-center">Loading properties...</p>}
         {error && <p className="text-center text-red-500">{error}</p>}
-        {!loading && !error && (
+        {!loading && !error && properties.length === 0 && (
+          <p className="text-center text-gray-500 text-lg font-semibold">
+            No properties found.
+          </p>
+        )}
+        {!loading && !error && properties.length > 0 && (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mt-10">
             {properties.map((property) => (
               <div

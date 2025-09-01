@@ -1,14 +1,15 @@
-
 "use client";
 import { useAuth } from "../context/AuthContext";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import api from "../lib/api";
-import Router from "next/router";
+import { useRouter } from "next/navigation";
 
 export default function ProfilePage() {
   const { user, loading } = useAuth();
   const [properties, setProperties] = useState([]);
+
+  const Router = useRouter();
 
   useEffect(() => {
     if (user && user.role === "seller") {
@@ -92,37 +93,39 @@ export default function ProfilePage() {
                             Update
                           </button>
                         </Link>
-                        <Link href={`/deleteProperty/${property._id}`}>
-                          <button
-                            onClick={async () => {
-                              if (
-                                confirm(
-                                  "Are you sure you want to delete this property?"
-                                )
-                              ) {
-                                // try {
-                                  const res = await fetch(
-                                    `http://localhost:5000/api/properties/deleteProperty/${property._id}`,
-                                    { method: "DELETE" }
-                                  );
-                                  if (res.ok) {
-                                    alert("Property deleted successfully!");
-                                    Router.push("/profile");
-                                  } else {
-                                    alert("Failed to delete property.");
-                                  }
-                                // } catch (error) {
-                                  console.error(error);
-                                  alert("Something went wrong.");
-                                }
+                        {/* <Link href={`/deleteProperty/${property._id}`}> */}
+                        <button
+                          onClick={async () => {
+                            if (
+                              confirm(
+                                "Are you sure you want to delete this property?"
+                              )
+                            ) {
+                              const res = await fetch(
+                                `http://localhost:8000/api/properties/deleteProperty/${property._id}`,
+                                { method: "DELETE" }
+                              );
+                              if (res.ok) {
+                                alert("Property deleted successfully!");
+
+                                setProperties(
+                                  properties.filter(
+                                    (p) => p._id !== property._id
+                                  )
+                                );
+                              } else {
+                                alert("Failed to delete property.");
                               }
+
+                              // console.error("error");
+                              // alert("Something went wrong.");
                             }
-                            // }
-                            className="px-3 py-1 bg-red-500 text-white rounded-lg font-semibold hover:bg-red-700 shadow"
-                          >
-                            Delete
-                          </button>
-                        </Link>
+                          }}
+                          className="px-3 py-1 bg-red-500 text-white rounded-lg font-semibold hover:bg-red-700 shadow"
+                        >
+                          Delete
+                        </button>
+                        {/* </Link> */}
                       </div>
                     </div>
                   </li>
@@ -131,16 +134,14 @@ export default function ProfilePage() {
             )}
           </div>
         )}
-         <div className="flex justify-center mt-8">
+        <div className="flex justify-center mt-8">
           <Link
             href="/HomePage"
             className="inline-block px-8 py-3 bg-blue-600 text-white rounded-xl shadow hover:bg-blue-700 font-bold text-lg transition"
           >
             ← Back to Home
           </Link>
-
         </div>
-
       </div>
     </div>
   );

@@ -150,7 +150,7 @@ export default function Login() {
       login(res.data);
       setTimeout(() => {
         router.push("/HomePage"); // redirect after login
-      }, 1500);
+      }, 1000);
     } catch (err) {
       setError(err.response?.data?.message || "Invalid credentials ❌");
     }
@@ -249,4 +249,3 @@ export default function Login() {
     </div>
   );
 }
-

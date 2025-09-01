@@ -19,6 +19,7 @@ export const bookingMutations = {
       // The subscription payload needs to match the schema, so we populate the booking.
       const populatedBooking = await newBooking.populate([{ path: 'property' }, { path: 'user', select: 'name email avatar' }]);
       pubsub.publish(`BOOKING_ADDED_${ownerId}`, { bookingAdded: populatedBooking });
+       return populatedBooking;
     }
 
     return newBooking;
