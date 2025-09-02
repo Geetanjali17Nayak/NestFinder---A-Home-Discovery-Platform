@@ -33,6 +33,24 @@ NestFinder is a full-stack web application designed to help users discover, sear
 - **Authentication**: [JSON Web Tokens (JWT)](https://jwt.io/) & [bcrypt](https://www.npmjs.com/package/bcrypt) for password hashing
 - **Email**: [Nodemailer](https://nodemailer.com/) for the contact form integration.
 
+## API Overview
+
+The backend server is built with Node.js, Express, and Apollo Server, offering a hybrid API structure that combines REST endpoints with a powerful GraphQL API.
+
+### REST API
+
+The REST API handles core functionalities that don't require the flexibility of GraphQL, such as:
+
+-   **User Authentication**: Endpoints like `/api/users/register` and `/api/users/login` manage user sign-up and sign-in processes.
+-   **User & Property Management**: Standard CRUD operations for user profiles and property listings.
+
+### GraphQL API
+
+The GraphQL endpoint (typically at `/graphql`) is the core of the application's real-time and data-intensive features.
+
+-   **Real-time Subscriptions**: Leverages WebSockets to provide instant updates to clients. Property owners are notified immediately of new booking requests, and admins receive real-time notifications for new user registrations.
+-   **Data Fetching**: Allows the frontend to query for complex, nested data structures in a single request, perfect for fetching detailed property information.
+
 ## 🚀 Getting Started
 
 Follow these instructions to get a copy of the project up and running on your local machine for development and testing purposes.
@@ -60,12 +78,12 @@ Follow these instructions to get a copy of the project up and running on your lo
 3.  **Create an environment file:**
     Create a `.env` file in the `Backend` directory and add the following variables:
 
-        ```env
-        MONGO_URI=your_mongodb_connection_string
-        JWT_SECRET=your_super_secret_jwt_key
-        PORT=8000
-         EMAIL_USER=dummy@example.com
-        EMAIL_PASS=16 digit APP PASS
+    ```env
+    MONGO_URI=your_mongodb_connection_string
+    JWT_SECRET=your_super_secret_jwt_key
+    PORT=8000
+    EMAIL_USER=your-backend-email@example.com
+    EMAIL_PASS=your-backend-email-password
     ```
 
 4.  **Start the backend server:**
@@ -106,6 +124,15 @@ Follow these instructions to get a copy of the project up and running on your lo
     npm run dev
     ```
     The frontend will be available at `http://localhost:3000`.
+
+
+
+5.  **Start the Backend server:**
+    ```bash
+    npm run dev
+    ```
+    The Backend server will be available at `http://localhost:8000`.
+
 
 ---
 
