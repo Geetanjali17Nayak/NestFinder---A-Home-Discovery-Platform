@@ -8,7 +8,7 @@ const userRouter=express.Router();
 userRouter.post("/register", registerUser);
 userRouter.post("/login",loginUser)
 userRouter.get("/getUserProfile",auth,getUserProfile);
-userRouter.patch("/updateUserProfile",updateUserProfile);
+userRouter.patch("/updateUserProfile",auth,updateUserProfile);
 userRouter.delete("/deleteUserProfile",auth,deleteUserProfile);
 userRouter.get("/getUserById/:id", getUserById)
 
