@@ -9,7 +9,8 @@ export const app = express();
 
 app.use(express.json());
 app.use(cors({
-  origin: "http://localhost:3000", // The origin of your frontend app
+  // origin: "http://localhost:3000",
+   origin: "https://nestfinder-frontend.onrender.com", // The origin of your frontend app
   credentials: true,
 }));
 app.use("/api/users", userRouter);
