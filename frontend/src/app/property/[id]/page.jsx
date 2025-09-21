@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import BookingButton from  "../../components/booking";
-import api from "../lib/api";
+import api from "@/app/lib/api";
 
 async function getPropertyById(id) {
   const res = await api.get(`/api/properties/getPropertyById/${id}`); 
