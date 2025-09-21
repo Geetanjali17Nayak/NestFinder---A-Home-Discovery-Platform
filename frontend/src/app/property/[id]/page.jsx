@@ -1,11 +1,10 @@
 import React from "react";
 import Link from "next/link";
 import BookingButton from  "../../components/booking";
+import api from "../lib/api";
 
 async function getPropertyById(id) {
-  const res = await fetch(
-    `http://localhost:8000/api/properties/getPropertyById/${id}`
-  );
+  const res = await api.get(`/api/properties/getPropertyById/${id}`); 
   if (!res.ok) throw new Error("Failed to fetch property");
   return res.json();
 }
