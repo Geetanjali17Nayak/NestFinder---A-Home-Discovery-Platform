@@ -139,6 +139,7 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/app/context/AuthContext"; // ✅ import auth
+import api from "@/app/lib/api";
 
 export default function ContactPage({ params }) {
   const { ownerId } = React.use(params);  
